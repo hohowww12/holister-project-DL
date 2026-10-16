@@ -1059,7 +1059,8 @@ html.curtain-wait .title,html.curtain-wait .title *,html.curtain-wait .bar{anima
 (function(){
   var root=document.documentElement,wrap=document.querySelector('.intro .wrap'),t=document.getElementById('show-title');if(!wrap||!t)return;
   var sg=document.createElement('div');sg.className='sign';sg.setAttribute('aria-hidden','true');sg.innerHTML='<i class="t"></i>';wrap.appendChild(sg);
-  function rect(el){var w=wrap.getBoundingClientRect(),b=el.getBoundingClientRect();return {l:b.left-w.left,t:b.top-w.top,w:b.width,h:b.height};}
+  /* 스크롤 중 제목이 작아진 상태에서 다시 재더라도 원래 크기로 환산 (아이폰 주소창 접힘 대응) */
+  function rect(el){var w=wrap.getBoundingClientRect(),b=el.getBoundingClientRect(),k=wrap.offsetWidth?w.width/wrap.offsetWidth:1;if(!k)k=1;return {l:(b.left-w.left)/k,t:(b.top-w.top)/k,w:b.width/k,h:b.height/k};}
   function layout(){var a=rect(t),o=rect(wrap.querySelector('.occasion')),g=rect(wrap.querySelector('.genre'));var L=Math.min(a.l,o.l,g.l)-22,R=Math.max(a.l+a.w,o.l+o.w,g.l+g.w)+22;
     sg.style.left=L+'px';sg.style.width=(R-L)+'px';sg.style.top=(o.t-20)+'px';sg.style.height=(g.t+g.h-o.t+40)+'px';}
   layout();addEventListener('resize',layout);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
