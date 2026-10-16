@@ -1080,21 +1080,10 @@ html.curtain-wait .title,html.curtain-wait .title *,html.curtain-wait .bar{anima
 </script>
 
 <style>
-/* ===== 일시 수정: 26.11.20 · 29px · 흰 글씨 옆 · 흰 빛(2단계) + 흰 밑줄 · 일시/장소 글자 세로 가운데 ===== */
+/* ===== 일시 수정: 26.11.20 · 29px · 흰 글씨 옆 · 흰 빛(2단계) · 일시/장소 글자 세로 가운데 ===== */
 .hero .facts>div{align-items:center}
-.hero .date .num{font-size:29px;position:relative;padding-bottom:6px}
+.hero .date .num{font-size:29px;padding-bottom:6px} /* 밑줄은 뺐지만 요일 위치는 그대로 두려고 아래 여백 유지 */
 .hero .date .when{color:var(--ink)}
 .hero .date .num{text-shadow:0 0 3px rgba(255,255,255,.65),0 0 16px rgba(255,255,255,.5),0 0 30px rgba(255,255,255,.2)}
-.hero .date .num::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;border-radius:2px;background:#fff7ec;box-shadow:0 0 10px rgba(255,247,236,.75);transform-origin:left}
-@media (prefers-reduced-motion:no-preference){
-  .fx .hero .date .num::after{transform:scaleX(0)}
-  .fx .hero .date.line-on .num::after{transform:none;transition:transform .9s cubic-bezier(.2,.75,.2,1)}
-}
 </style>
-<script>
-/* 일시가 화면에 들어오면 밑줄이 0.9초 동안 그어짐 (처음 한 번) */
-(function(){var d=document.querySelector('.hero .date');if(!d)return;
-if(!('IntersectionObserver' in window)){d.classList.add('line-on');return;}
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){setTimeout(function(){d.classList.add('line-on');},250);io.disconnect();}});},{rootMargin:'0px 0px -15% 0px'});io.observe(d);})();
-</script>
 </body></html>
