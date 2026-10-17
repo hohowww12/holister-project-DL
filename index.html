@@ -995,11 +995,11 @@ html.curtain-wait .title,html.curtain-wait .title *,html.curtain-wait .bar{anima
   var items=[crew.querySelector('.crew-org'),crew.querySelector('.crew-about'),crew.querySelector('.crew-yr')].concat([].slice.call(crew.querySelectorAll('.crew-list>div')));
   items.forEach(function(el,i){if(el){el.classList.add('rvl');el.style.setProperty('--i',i);}});
   crew.classList.add('fx');
-  /* 켜지는 시점: 휴대폰은 일시 칸이 위쪽 메뉴바 뒤로 20%쯤 가려질 때, 넓은 화면은 카드 윗부분이 화면 45% 높이에 올 때 */
+  /* 켜지는 시점(조금 일찍): 휴대폰은 일시 칸이 메뉴바보다 화면 16%만큼 아래에 있을 때, 넓은 화면은 카드 윗부분이 화면 61% 높이에 올 때 */
   var row=document.querySelector('.facts>div'),bar=document.querySelector('header.bar'),done=false;
   function check(){if(done)return;var top=bar?bar.getBoundingClientRect().bottom:0;var r=row?row.getBoundingClientRect():crew.getBoundingClientRect();
     var wide=innerWidth>=880,c=crew.getBoundingClientRect();
-    if((!wide&&r.top+r.height*.2<=top)||(wide&&c.top<=innerHeight*.45)){done=true;crew.classList.add('lit');removeEventListener('scroll',onScroll);}}
+    if((!wide&&r.top+r.height*.2<=top+innerHeight*.16)||(wide&&c.top<=innerHeight*.61)){done=true;crew.classList.add('lit');removeEventListener('scroll',onScroll);}}
   function onScroll(){requestAnimationFrame(check);}
   addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);check();
   crew.addEventListener('click',function(){done=true;crew.classList.remove('lit');void crew.offsetWidth;crew.classList.add('lit');});
@@ -1085,5 +1085,33 @@ html.curtain-wait .title,html.curtain-wait .title *,html.curtain-wait .bar{anima
 .hero .date .num{font-size:29px;padding-bottom:6px} /* 밑줄은 뺐지만 요일 위치는 그대로 두려고 아래 여백 유지 */
 .hero .date .when{color:var(--ink)}
 .hero .date .num{text-shadow:0 0 3px rgba(255,255,255,.65),0 0 16px rgba(255,255,255,.5),0 0 30px rgba(255,255,255,.2)}
+</style>
+<style>
+/* ===== 분위기: 따뜻한 로즈 (보라 기운 빼고 산호·살구빛) ===== */
+:root{--black:#0b0707;--panel:#181010;--line:#2f2222;--soft:#d0bfb9}
+body{background:#0b0707}
+.intro::before{background:radial-gradient(circle min(78vw,560px) at 46% 44%,rgba(255,120,100,.24),transparent 100%),radial-gradient(circle min(62vw,460px) at 56% 56%,rgba(255,205,130,.16),transparent 100%)}
+.hero::before{background:radial-gradient(closest-side at 35% 45%,rgba(255,120,100,.13),transparent 70%),radial-gradient(closest-side at 70% 60%,rgba(255,205,130,.10),transparent 70%)}
+.ga{background:linear-gradient(170deg,#1e1312,#130c0b)}
+.cast-list .person{background:linear-gradient(180deg,#130c0b,#0b0707)}
+.shot.empty{background:radial-gradient(closest-side,rgba(255,120,100,.13),transparent),var(--panel)}
+.bar{background:rgba(11,7,7,.86)}
+/* 입장 티켓도 같은 분위기로 (티켓 CSS보다 우선하도록 html 붙임) */
+html .gate::before{background:radial-gradient(ellipse 120% 80% at 50% 30%,#2c1511 0%,#170c0a 45%,#080505 80%)}
+html .gate-shade{background:linear-gradient(180deg,rgba(8,5,5,0) 50%,rgba(8,5,5,.15) 80%,rgba(8,5,5,.55))}
+html .tk-half{background:linear-gradient(165deg,#30191a 0%,#1d1111 55%,#150c0b 100%)}
+html .tk-occ,html .tk-sub,html .tk-info dd small{color:#d2bdb4}
+html .tk-info dt,html .tk-foot{color:#ab968d}
+</style>
+<style>
+/* ===== 입장 티켓 바탕: 검정 (반짝임·무지개 테두리는 그대로) ===== */
+html .tk-half{background:linear-gradient(165deg,#1b1616 0%,#0f0c0c 55%,#080606 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -1px 0 rgba(0,0,0,.6)}
+html .tk-occ,html .tk-sub,html .tk-info dd small{color:#c8bdb8}
+html .tk-info dt,html .tk-foot{color:#9a8f8a}
+</style>
+<style>
+/* 간판 테두리: 흰색 네온 + 은은한 샴페인 빛 (선은 흰색, 바깥 번짐에 샴페인) */
+.intro .sign .t{border-color:#fffaf0;box-shadow:0 0 5px #ffffff,0 0 16px rgba(255,250,240,.65),0 0 40px rgba(243,217,164,.42),0 0 70px rgba(243,217,164,.18),inset 0 0 8px rgba(255,255,255,.5),inset 0 0 24px rgba(243,217,164,.2)}
+.intro .sign .t::after{border-color:rgba(255,255,255,.95)}
 </style>
 </body></html>
