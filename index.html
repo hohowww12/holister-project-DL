@@ -758,6 +758,13 @@ html.curtain-wait .title,html.curtain-wait .title *,html.curtain-wait .bar{anima
 .holister .crew{box-sizing:border-box;min-width:0;width:100%;max-width:min(620px,100%);margin:8px auto 0!important;position:relative!important;top:auto!important}
 .holister .ch-head{text-align:left}
 
+
+/* 초대장 You're invited 상자: 어느 정도 보이면 금빛 테두리가 한 바퀴 그려짐 (누르면 다시) */
+.inv-guest{position:relative}
+.inv-guest .ga-line{position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;padding:1.5px;background:conic-gradient(from 0deg at 50% 50%,#ffe9a8 0deg,#f2c45a var(--ga),transparent var(--ga));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);filter:drop-shadow(0 0 6px rgba(255,200,90,.8))}
+.inv-guest.drawn .ga-line{animation:gaDraw 1.6s cubic-bezier(.5,0,.2,1) forwards,gaGlow 1.2s ease 1.6s}
+.inv-guest.fx-ga{cursor:pointer;-webkit-tap-highlight-color:transparent}
+@media (prefers-reduced-motion:reduce){.inv-guest .ga-line{--ga:360deg;animation:none!important}}
 </style>
 </head>
 <body>
@@ -2410,6 +2417,18 @@ html.cm-car .cast-list:focus-visible{outline:2px solid #ff9a5c;outline-offset:-4
     if((dy>0&&acc<0)||(dy<0&&acc>0))acc=0;acc+=dy;
     if(acc>8)root.classList.add('inv-hidebar');else if(acc<-8)root.classList.remove('inv-hidebar');}
   addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});
+})();
+</script>
+<script>
+/* 초대장 You're invited 상자: 화면에 어느 정도(약 60%) 보이면 금빛 테두리가 그려짐, 누르면 다시 */
+(function(){
+  var ga=document.querySelector('.inv-guest');if(!ga)return;
+  var l=document.createElement('i');l.className='ga-line';l.setAttribute('aria-hidden','true');ga.appendChild(l);
+  ga.classList.add('fx-ga');
+  if(!('IntersectionObserver' in window)){ga.classList.add('drawn');return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){ga.classList.add('drawn');io.disconnect();}});},{threshold:.6});
+  io.observe(ga);
+  ga.addEventListener('click',function(){ga.classList.remove('drawn');void ga.offsetWidth;ga.classList.add('drawn');io.disconnect();});
 })();
 </script>
 </body>
