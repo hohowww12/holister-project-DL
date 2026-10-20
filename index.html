@@ -742,6 +742,7 @@ html.curtain-wait .title,html.curtain-wait .title *,html.curtain-wait .bar{anima
 .sub-part{display:flex;flex-direction:column;gap:18px}
 .sub-intent .intent-head-wrap{min-height:118px}
 .sub-story{margin-top:30px;padding-top:30px;border-top:1px solid var(--line)}
+.sub-intent>.sub-h{margin-top:22px;padding:28px 0 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 
 /* 초대장 촛불: 금빛 촛대(B) */
 .inv-flame{width:96px;height:62px}
@@ -756,6 +757,7 @@ html.curtain-wait .title,html.curtain-wait .title *,html.curtain-wait .bar{anima
 .holister .wrap{min-width:0}
 .holister .crew{box-sizing:border-box;min-width:0;width:100%;max-width:min(620px,100%);margin:8px auto 0!important;position:relative!important;top:auto!important}
 .holister .ch-head{text-align:left}
+
 </style>
 </head>
 <body>
@@ -952,7 +954,7 @@ html.curtain-wait .title,html.curtain-wait .title *,html.curtain-wait .bar{anima
        단체: photos/group.jpg -->
   <!-- ===================== 홀리스터 ===================== -->
   <span class="anchor" id="holister"></span>
-  <section class="chapter holister" data-id="holister" aria-labelledby="holister-title">
+  <section class="chapter holister" data-id="holister" data-noflip aria-labelledby="holister-title">
     <div class="wrap">
       <header class="ch-head" data-rv>
         <p class="ch-en" aria-hidden="true">Who We Are</p>
