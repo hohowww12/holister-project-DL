@@ -822,8 +822,8 @@ html.intro-away .intro .title .ch,html.intro-away .intro .title .tcandle .flame,
     try{window.__bgmUnlock&&window.__bgmUnlock();}catch(e){}
     try{window.scrollTo(0,0);}catch(e){}
     g.classList.add('torn');root.classList.remove('gate-on');
-    setTimeout(function(){root.classList.remove('curtain-wait');},380);
-    setTimeout(function(){if(g.parentNode)g.parentNode.removeChild(g);},1300);
+    setTimeout(function(){root.classList.remove('curtain-wait');},360);
+    setTimeout(function(){if(g.parentNode)g.parentNode.removeChild(g);},1200);
   }
   var tk=g.querySelector('.tk');
   g.addEventListener('pointermove',function(e){var r=tk.getBoundingClientRect();tk.style.setProperty('--x',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');tk.style.setProperty('--y',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');});
@@ -2017,9 +2017,12 @@ html[data-rv="popflick"].g2.o1 .intro .title.fire.lplay.fl1 .c,html[data-rv="pop
     function mk(){if(ctx)return;try{ctx=new AC();gain=ctx.createGain();gain.gain.value=0;gain.connect(ctx.destination);}catch(e){ctx=null;}}
     mk();
     if(ctx){
-      var raw=bytes().buffer;
+      /* 렉 줄이기: 음악 데이터를 첫 화면이 그려진 뒤, 가능하면 다른 일꾼(브라우저)에게 맡겨 풂 */
       var ok=function(b){buf=b;if(pendingStart)begin();},bad=function(){};
-      try{var pr=ctx.decodeAudioData(raw,ok,bad);if(pr&&pr.catch)pr.catch(bad);}catch(e){}
+      var dec=function(raw){try{var pr=ctx.decodeAudioData(raw,ok,bad);if(pr&&pr.catch)pr.catch(bad);}catch(e){}};
+      var prep=function(){var mime=(d.getAttribute('data-type')||'audio/mpeg');
+        try{fetch('data:'+mime+';base64,'+b64).then(function(r){return r.arrayBuffer();}).then(dec,function(){dec(bytes().buffer);});}catch(e){dec(bytes().buffer);}};
+      setTimeout(prep,250);
     }
     /* 티켓 터치 순간: 소리 장치만 깨움(1샘플짜리 무음) */
     window.__bgmUnlock=function(){
@@ -2118,23 +2121,29 @@ html.d3 .tkslab{display:block;position:absolute;left:0;right:0;top:0;bottom:0;bo
   -webkit-mask:radial-gradient(circle 13px at 0 var(--ny,60%),transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 13px at 100% var(--ny,60%),transparent 98%,#000) right/51% 100% no-repeat;
   mask:radial-gradient(circle 13px at 0 var(--ny,60%),transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 13px at 100% var(--ny,60%),transparent 98%,#000) right/51% 100% no-repeat}
 /* 찢으면: 무대 사진 속으로 들어가듯 앞으로 다가오고, 티켓 조각은 종이처럼 휘며 들려 올라갔다가 화면 쪽으로 날아감 */
-html.d3 .gate.torn .gate-photo,html.d3 .gate.torn .gate-photo2{transform:translate3d(0,0,330px) scale(1.543)}
-html.d3 .gate.torn .gate-folds{transform:translate3d(0,0,520px) scale(1.229)}
+html.d3 .gate.torn .gate-photo,html.d3 .gate.torn .gate-photo2{transform:translate3d(0,0,-60px) scale(1.543)}
+html.d3 .gate.torn .gate-folds{transform:translate3d(0,0,120px) scale(1.229)}
 html.d3 .gate.torn .tk3d::before,html.d3 .gate.torn .tkslab{opacity:0;transition:opacity .25s}
 html.d3 .gate.torn .tk-top{animation-name:tearTop3}
 html.d3 .gate.torn .tk-bot{animation-name:tearBot3}
 @keyframes tearTop3{
   0%{transform:none}
-  16%{transform:translate3d(-2px,-5px,12px) rotateX(-24deg) skewX(-2deg) rotate(-3deg)}
-  38%{transform:translate3d(-5%,-28%,90px) rotateX(-44deg) rotateY(-12deg) skewX(-4deg) rotate(-7deg)}
+  20%{transform:translate3d(-1px,-3px,6px) rotateX(-12deg) rotate(-1.5deg)}
   75%{opacity:1}
-  100%{transform:translate3d(-18%,-115%,260px) rotateX(-70deg) rotateY(-30deg) rotate(-16deg);opacity:0}}
+  100%{transform:translate3d(-8%,-70%,120px) rotateX(-36deg) rotateY(-12deg) rotate(-7deg);opacity:0}}
 @keyframes tearBot3{
   0%{transform:none}
-  16%{transform:translate3d(2px,6px,12px) rotateX(24deg) skewX(2deg) rotate(2deg)}
-  38%{transform:translate3d(4%,30%,90px) rotateX(44deg) rotateY(12deg) skewX(4deg) rotate(5deg)}
+  20%{transform:translate3d(1px,3px,6px) rotateX(12deg) rotate(1deg)}
   75%{opacity:1}
-  100%{transform:translate3d(14%,135%,260px) rotateX(70deg) rotateY(30deg) rotate(12deg);opacity:0}}
+  100%{transform:translate3d(6%,80%,120px) rotateX(36deg) rotateY(12deg) rotate(5deg);opacity:0}}
+/* 1-A: 덜 화려하게 — 시간·거리·사진 확대를 줄임 */
+html.d3 .gate.torn .tk-top{animation-duration:.95s;animation-delay:.08s;animation-timing-function:cubic-bezier(.5,0,.3,1)}
+html.d3 .gate.torn .tk-bot{animation-duration:.95s;animation-delay:.12s;animation-timing-function:cubic-bezier(.5,0,.3,1)}
+html.d3 .gate.torn{transition:opacity .45s ease .6s}
+/* 렉 줄이기: 찢기는 동안 티켓 전체 그림자(필터)를 끄고, 두 조각은 미리 따로 준비 */
+html.d3 .tk-top,html.d3 .tk-bot{will-change:transform,opacity}
+html.d3 .gate.torn .tk{filter:none;animation:none}
+html.d3 .gate{will-change:opacity}
 
 /* 2) 첫 화면(간판): 테두리가 뒤로 이어진 빛 상자처럼 두께가 생기고, 제목은 그 앞에 떠 있음 */
 html.d3 .intro{perspective:800px;perspective-origin:50% 45%}
