@@ -798,6 +798,27 @@ html.d3 .gate:not(.torn) .gate-photo,html.d3 .gate:not(.torn) .gate-photo2,html.
 /* 렉 줄이기 3: 제목이 작아지며 넘어가는 동안엔 제목 글자의 일렁임을 잠시 멈춤 */
 html.intro-away .intro .title .ch,html.intro-away .intro .title .tcandle .flame,html.intro-away .intro .title .ksvg .fl{animation-play-state:paused!important}
 </style>
+<script>
+/* 기기 성능 맞춤: 아이폰/아이패드는 지금 그대로, 안드로이드(갤럭시 등)·저사양 기기는 '가벼운 모드'로 같은 화면을 더 적은 계산으로 그림 */
+(function(){try{var u=navigator.userAgent||'',ios=/iP(hone|ad|od)/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1),
+  low=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||(navigator.deviceMemory&&navigator.deviceMemory<=4);
+  if(/Android/i.test(u)||(!ios&&low))document.documentElement.classList.add('lite');}catch(e){}
+  /* 스크롤 위치를 한 곳에서만 읽어 두고 함께 씀(매 프레임 읽으면 화면 계산을 강제로 다시 함) */
+  window.__sy=0;var sy0=function(){window.__sy=window.scrollY||window.pageYOffset||0;};addEventListener('DOMContentLoaded',sy0);addEventListener('load',sy0);addEventListener('pageshow',sy0);addEventListener('scroll',function(){window.__sy=window.scrollY||window.pageYOffset||0;},{passive:true});})();
+</script>
+<style id="lite-style">
+/* 가벼운 모드: 뒤를 흐리게 비추는 효과(배경 블러)는 안드로이드에서 매 순간 다시 계산돼 렉의 큰 원인 → 거의 같은 색의 불투명 배경으로 */
+html.lite .bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(9,7,11,.96)!important}
+html.lite #bgmBtn{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(20,14,10,.92)!important}
+/* 가벼운 모드: 티켓을 찢을 때 뒤 극장 사진(아주 큰 그림)은 움직이지 않고 그대로 — 큰 그림을 다시 그리는 부담 제거 */
+html.lite.d3 .gate.torn .gate-photo,html.lite.d3 .gate.torn .gate-photo2{transform:translate3d(var(--bx,0px),var(--by,0px),-380px) scale(1.543)}
+html.lite.d3 .gate.torn .gate-folds{transform:translate3d(var(--fx,0px),var(--fy,0px),-160px) scale(1.229)}
+/* 가벼운 모드: 제목 글자의 일렁임은 밝기(필터) 대신 투명도만으로 — 모양은 거의 같고 훨씬 가벼움 */
+@keyframes clEmberL{0%,100%{opacity:1}22%{opacity:.86}38%{opacity:1}61%{opacity:.9}74%{opacity:1}}
+html.lite .intro .title.fire.lit .ch{animation-name:clCatch,clEmberL}
+html.lite .intro .title.fire.v3.lit .ch{animation-name:clCatch3,clEmberL}
+html.lite .intro .title.fire.burn .ch{animation-name:clEmberL!important}
+</style>
 </head>
 <body>
 <script>
@@ -1119,18 +1140,22 @@ html.intro-away .intro .title .ch,html.intro-away .intro .title .tcandle .flame,
     Object.keys(links).forEach(function(k){if(k===id)links[k].setAttribute('aria-current','true');else links[k].removeAttribute('aria-current');});
     var a=links[id];if(a&&nav){nav.scrollTo({left:a.offsetLeft-(nav.clientWidth-a.offsetWidth)/2,behavior:'smooth'});}
   }
+  /* 렉 줄이기: 위치를 먼저 한꺼번에 읽고, 그다음에 한꺼번에 바꿈(읽기·쓰기를 섞으면 매번 화면 계산을 다시 함). 바뀐 값만 적용 */
+  var tvh=window.innerHeight;window.addEventListener('resize',function(){tvh=window.innerHeight;});
+  function setS(el,k,v){var c=el.__st||(el.__st={});if(c[k]!==v){c[k]=v;el.style[k]=v;}}
   function tick(){
-    ticking=false;var vh=window.innerHeight,active='';
-    if(intro)intro.style.visibility=layers[0].getBoundingClientRect().top<=0?'hidden':'';
-    for(var i=0;i<layers.length;i++){
-      var l=layers[i],next=layers[i+1];
-      var p=0;
-      if(next){var t=next.getBoundingClientRect().top;p=Math.min(1,Math.max(0,(vh-t)/vh));}
-      if(p>=1){l.style.visibility='hidden';}
-      else if(p>0){l.style.visibility='';p=Math.min(1,p/.85);l.style.transform='translateY('+(-p*40).toFixed(1)+'px) scale('+(1-p*.22).toFixed(4)+')';l.style.opacity=(1-p*.92).toFixed(3);}
-      else{l.style.visibility='';l.style.transform='';l.style.opacity='';}
+    ticking=false;var vh=tvh,active='',i;
+    var tops=layers.map(function(l){return l.getBoundingClientRect().top;});
+    var ctops=chapters.map(function(c){return c.getBoundingClientRect().top;});
+    if(intro)setS(intro,'visibility',tops[0]<=0?'hidden':'');
+    for(i=0;i<layers.length;i++){
+      var l=layers[i],p=0;
+      if(i+1<layers.length){p=Math.min(1,Math.max(0,(vh-tops[i+1])/vh));}
+      if(p>=1){setS(l,'visibility','hidden');}
+      else if(p>0){setS(l,'visibility','');p=Math.min(1,p/.85);setS(l,'transform','translateY('+(-p*40).toFixed(1)+'px) scale('+(1-p*.22).toFixed(4)+')');setS(l,'opacity',(1-p*.92).toFixed(3));}
+      else{setS(l,'visibility','');setS(l,'transform','');setS(l,'opacity','');}
     }
-    chapters.forEach(function(c){var id=c.getAttribute('data-id');if(id&&c.getBoundingClientRect().top<=vh*.5)active=id;});
+    chapters.forEach(function(c,k){var id=c.getAttribute('data-id');if(id&&ctops[k]<=vh*.5)active=id;});
     setActive(active);
   }
   window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(tick);}},{passive:true});
@@ -1561,7 +1586,9 @@ html.cl-seq.cl-txt .intro .occasion,html.cl-seq.cl-txt .intro .genre,html.cl-seq
   var cv=document.createElement('canvas');cv.className='crowd';cv.setAttribute('aria-hidden','true');intro.insertBefore(cv,intro.firstChild);
   var cx=cv.getContext('2d'),W=0,H=0,L=[],mode=1,t0=null;
   function off(el){var x=0,y=0;while(el&&el!==intro){x+=el.offsetLeft;y+=el.offsetTop;el=el.offsetParent;}return {x:x,y:y};}
-  function build(){var dpr=Math.min(2,window.devicePixelRatio||1);W=intro.offsetWidth;H=intro.offsetHeight;cv.style.width=W+'px';cv.style.height=H+'px';cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+  var LITE=document.documentElement.classList.contains('lite');
+  var glowS=(function(){var c=document.createElement('canvas');c.width=c.height=96;var g=c.getContext('2d'),gr=g.createRadialGradient(48,48,0,48,48,48);gr.addColorStop(0,'rgba(255,214,150,.48)');gr.addColorStop(.35,'rgba(255,160,70,.15)');gr.addColorStop(1,'rgba(255,140,60,0)');g.fillStyle=gr;g.fillRect(0,0,96,96);return c;})();
+  function build(){var dpr=Math.min(LITE?1.25:2,window.devicePixelRatio||1);W=intro.offsetWidth;H=intro.offsetHeight;cv.style.width=W+'px';cv.style.height=H+'px';cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
     var o=off(wrap),fx0=o.x-10,fy0=o.y-10,fx1=o.x+wrap.offsetWidth+10,fy1=o.y+wrap.offsetHeight+10;L=[];
     var cue=intro.querySelector('.cue'),cy=cue?off(cue).y:H,ch=cue?cue.offsetHeight:0;
     function ok(x,y){if(x>fx0&&x<fx1&&y>fy0&&y<fy1)return false;if(cue&&y>cy-14&&y<cy+ch+10&&Math.abs(x-W/2)<90)return false;return true;}
@@ -1574,12 +1601,11 @@ html.cl-seq.cl-txt .intro .occasion,html.cl-seq.cl-txt .intro .genre,html.cl-seq
   function draw(t){cx.clearRect(0,0,W,H);
     if(mode&&t0!==null){var lit=reduce?1:Math.min(1,(t-t0)/3400);
       for(var i=0;i<L.length;i++){var p=L[i];if(p.o>lit)break;var a=Math.min(1,(lit-p.o)*7),fl=.86+Math.sin(t/260+p.ph)*.09+Math.sin(t/97+p.ph*2)*.05,r=8*p.s*fl;
-        var g=cx.createRadialGradient(p.x,p.y,0,p.x,p.y,r*3.2);g.addColorStop(0,'rgba(255,214,150,'+(.48*a)+')');g.addColorStop(.35,'rgba(255,160,70,'+(.15*a)+')');g.addColorStop(1,'rgba(255,140,60,0)');
-        cx.fillStyle=g;cx.beginPath();cx.arc(p.x,p.y,r*3.2,0,6.283);cx.fill();cx.fillStyle='rgba(255,248,230,'+(.9*a)+')';cx.beginPath();cx.ellipse(p.x,p.y,1.4*p.s,3*p.s*fl,0,0,6.283);cx.fill();}}
-    cvOn=(window.scrollY||pageYOffset)<innerHeight*1.1;if(cvOn)requestAnimationFrame(draw);else cvRun=false;}
+        var R2=r*3.2;cx.globalAlpha=a;cx.drawImage(glowS,p.x-R2,p.y-R2,R2*2,R2*2);cx.globalAlpha=1;cx.fillStyle='rgba(255,248,230,'+(.9*a)+')';cx.beginPath();cx.ellipse(p.x,p.y,1.4*p.s,3*p.s*fl,0,0,6.283);cx.fill();}}
+    cvOn=window.__sy<cVH*1.1;if(cvOn)requestAnimationFrame(draw);else cvRun=false;}
   /* 렉 줄이기: 첫 화면이 안 보이면 객석 촛불 그리기를 쉼 */
-  var cvOn=true,cvRun=true;
-  function cvChk(){cvOn=(window.scrollY||pageYOffset)<innerHeight*1.1;if(cvOn&&!cvRun){cvRun=true;requestAnimationFrame(draw);}}
+  var cvOn=true,cvRun=true,cVH=innerHeight;addEventListener('resize',function(){cVH=innerHeight;});
+  function cvChk(){cvOn=window.__sy<cVH*1.1;if(cvOn&&!cvRun){cvRun=true;requestAnimationFrame(draw);}}
   addEventListener('scroll',cvChk,{passive:true});
   build();requestAnimationFrame(draw);
   var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build,150);});
@@ -2196,7 +2222,7 @@ html.d3 .dust{display:block}
     intro.insertBefore(refl,intro.firstChild);
     new MutationObserver(function(rs){rs.forEach(function(r){if(r.target===wrap)return;var c=map.get(r.target);if(!c)return;var v=r.target.getAttribute(r.attributeName);if(v===null)c.removeAttribute(r.attributeName);else c.setAttribute(r.attributeName,v);});})
       .observe(wrap,{subtree:true,attributes:true,attributeFilter:['class','style']});
-    var sg=wrap.querySelector(':scope>.sign');if(sg){for(var i=1;i<=6;i++){var c=sg.cloneNode(true);c.classList.add('ext');c.style.setProperty('--ez',(-i*9)+'px');c.style.setProperty('--eo',(.42-i*.055).toFixed(3));wrap.insertBefore(c,sg.nextSibling);}}
+    var sg=wrap.querySelector(':scope>.sign');if(sg){var EXT=root.classList.contains('lite')?3:6,sp=6/EXT;for(var i=1;i<=EXT;i++){var c=sg.cloneNode(true);c.classList.add('ext');c.style.setProperty('--ez',(-i*9*sp)+'px');c.style.setProperty('--eo',(.42-i*.055*sp).toFixed(3));wrap.insertBefore(c,sg.nextSibling);}}
   }
   var RG=10,rbox={l:0,t:0,w:0,h:0};
   function placeRefl(){if(!refl)return;rbox={l:wrap.offsetLeft,t:wrap.offsetTop,w:wrap.offsetWidth,h:wrap.offsetHeight};
@@ -2226,8 +2252,9 @@ html.d3 .dust{display:block}
   }
   function backCanvas(parent,before){var c=document.createElement('canvas');c.className='dust';c.setAttribute('aria-hidden','true');c.style.zIndex=parent===gate?'-1':'0';parent.insertBefore(c,before||null);return c;}
   var dGate=null,dIntro=null,dFront=front?Dust(front,14,.62,1):null;
-  if(gate){var gs=gate.querySelector('.gate-shade');dGate=Dust(backCanvas(gate,gs),40,0,.55);}
-  if(intro&&wrap){dIntro=Dust(backCanvas(intro,wrap),40,0,.55);}
+  var DN=root.classList.contains('lite')?22:40;
+  if(gate){var gs=gate.querySelector('.gate-shade');dGate=Dust(backCanvas(gate,gs),DN,0,.55);}
+  if(intro&&wrap){dIntro=Dust(backCanvas(intro,wrap),DN,0,.55);}
   addEventListener('resize',function(){[dGate,dIntro,dFront].forEach(function(d){if(d)d.size();});});
 
   var ptr={x:0,y:0,tx:0,ty:0,active:0},t0=performance.now();
@@ -2237,9 +2264,10 @@ html.d3 .dust{display:block}
   function f(n){return n.toFixed(1);}
   /* 값이 바뀔 때만 적용 (불필요한 다시 그리기 줄이기) */
   function setv(el,k,v){if(!el.__d3)el.__d3={};if(el.__d3[k]===v)return;el.__d3[k]=v;el.style.setProperty(k,v);}
+  var lVH=innerHeight;addEventListener('resize',function(){lVH=innerHeight;});
   function loop(now){
     requestAnimationFrame(loop);
-    var t=(now-t0)/1000,vh=innerHeight,y=scrollY||pageYOffset;
+    var t=(now-t0)/1000,vh=lVH,y=window.__sy;
     /* 손가락·마우스를 따라 기울고, 가만히 있으면 저절로 아주 천천히 흔들림 */
     var idle=now-ptr.active>2500,dx,dy;
     if(idle){dx=Math.sin(t*.35)*.5;dy=Math.sin(t*.27+1.2)*.4;}else{dx=ptr.tx;dy=ptr.ty;}
