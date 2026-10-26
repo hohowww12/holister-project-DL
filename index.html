@@ -797,28 +797,33 @@ html.d3 .gate:not(.torn) .gate-photo,html.d3 .gate:not(.torn) .gate-photo2,html.
 .tk-genre,.tk-half>.sheen{will-change:transform}
 /* 렉 줄이기 3: 제목이 작아지며 넘어가는 동안엔 제목 글자의 일렁임을 잠시 멈춤 */
 html.intro-away .intro .title .ch,html.intro-away .intro .title .tcandle .flame,html.intro-away .intro .title .ksvg .fl{animation-play-state:paused!important}
+
+/* ===== 렉·깨짐 줄이기 (모양은 그대로) ===== */
+/* 뒤 사진의 흐림·어둡게를 미리 그림으로 구워 둠 → 매 순간 흐림 계산 없음 */
+.gate-photo2{background-image:url(data:image/jpeg;base64,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)!important;background-size:auto calc(46% * 1.101)!important;filter:none!important}
+/* 앞 사진의 '어둡게'는 필터 대신 검은 막(투명도)으로 → 찢을 때 밝아지는 것도 그대로 */
+.gate-photo{filter:none!important}
+.gate-photo::after{content:"";position:absolute;inset:0;background:#000;opacity:.38;transition:opacity .7s ease;will-change:opacity}
+.gate.torn .gate-photo::after{opacity:.15}
+/* 위쪽 빛줄기는 원래 부드러운 그라데이션이라 흐림 없이도 같음 */
+.gate-beam{filter:none!important}
+/* 티켓 그림자: 필터 대신 티켓 뒤 그림자 판으로 → 찢길 때 매 순간 그림자를 다시 계산하지 않음 */
+.tk{filter:none!important}
+.tk::after{content:"";position:absolute;left:0;right:0;top:0;bottom:0;z-index:-1;border-radius:12px;box-shadow:0 30px 50px rgba(0,0,0,.65);pointer-events:none;transition:opacity .2s;will-change:opacity}
+.gate.torn .tk::after{opacity:0}
+
+/* 간판이 작아지며 사라지기 시작하면 이미 납작해진 두께용 복사본·바닥 반사는 숨김 (눈에 안 보이는 차이) */
+html.intro-flat .intro .wrap>.sign.ext,html.intro-flat .intro .refl{visibility:hidden}
+/* 뒤를 흐리게 비추는 효과(배경 블러)는 화면이 움직일 때마다 다시 계산됨 → 거의 같은 색의 배경으로 */
+.bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(9,7,11,.94)!important}
+#bgmBtn{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(20,14,10,.9)!important}
+/* 음악 버튼의 음표 두근거림: 아이콘 전체를 움직여 버튼만 따로 처리 (모양 같음) */
+@media (prefers-reduced-motion:no-preference){#bgmBtn:not(.off) .note{animation:none!important}#bgmBtn:not(.off) svg{animation:bgmPulse 2.4s ease-in-out infinite;will-change:transform}}
 </style>
 <script>
-/* 기기 성능 맞춤: 아이폰/아이패드는 지금 그대로, 안드로이드(갤럭시 등)·저사양 기기는 '가벼운 모드'로 같은 화면을 더 적은 계산으로 그림 */
-(function(){try{var u=navigator.userAgent||'',ios=/iP(hone|ad|od)/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1),
-  low=(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4)||(navigator.deviceMemory&&navigator.deviceMemory<=4);
-  if(/Android/i.test(u)||(!ios&&low))document.documentElement.classList.add('lite');}catch(e){}
-  /* 스크롤 위치를 한 곳에서만 읽어 두고 함께 씀(매 프레임 읽으면 화면 계산을 강제로 다시 함) */
-  window.__sy=0;var sy0=function(){window.__sy=window.scrollY||window.pageYOffset||0;};addEventListener('DOMContentLoaded',sy0);addEventListener('load',sy0);addEventListener('pageshow',sy0);addEventListener('scroll',function(){window.__sy=window.scrollY||window.pageYOffset||0;},{passive:true});})();
+/* 스크롤 위치를 한 곳에서만 읽어 두고 함께 씀 (매 순간 읽으면 화면 계산을 강제로 다시 함) */
+(function(){window.__sy=0;var f=function(){window.__sy=window.scrollY||window.pageYOffset||0;};addEventListener('scroll',f,{passive:true});addEventListener('DOMContentLoaded',f);addEventListener('load',f);addEventListener('pageshow',f);})();
 </script>
-<style id="lite-style">
-/* 가벼운 모드: 뒤를 흐리게 비추는 효과(배경 블러)는 안드로이드에서 매 순간 다시 계산돼 렉의 큰 원인 → 거의 같은 색의 불투명 배경으로 */
-html.lite .bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(9,7,11,.96)!important}
-html.lite #bgmBtn{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(20,14,10,.92)!important}
-/* 가벼운 모드: 티켓을 찢을 때 뒤 극장 사진(아주 큰 그림)은 움직이지 않고 그대로 — 큰 그림을 다시 그리는 부담 제거 */
-html.lite.d3 .gate.torn .gate-photo,html.lite.d3 .gate.torn .gate-photo2{transform:translate3d(var(--bx,0px),var(--by,0px),-380px) scale(1.543)}
-html.lite.d3 .gate.torn .gate-folds{transform:translate3d(var(--fx,0px),var(--fy,0px),-160px) scale(1.229)}
-/* 가벼운 모드: 제목 글자의 일렁임은 밝기(필터) 대신 투명도만으로 — 모양은 거의 같고 훨씬 가벼움 */
-@keyframes clEmberL{0%,100%{opacity:1}22%{opacity:.86}38%{opacity:1}61%{opacity:.9}74%{opacity:1}}
-html.lite .intro .title.fire.lit .ch{animation-name:clCatch,clEmberL}
-html.lite .intro .title.fire.v3.lit .ch{animation-name:clCatch3,clEmberL}
-html.lite .intro .title.fire.burn .ch{animation-name:clEmberL!important}
-</style>
 </head>
 <body>
 <script>
@@ -843,8 +848,8 @@ html.lite .intro .title.fire.burn .ch{animation-name:clEmberL!important}
     try{window.__bgmUnlock&&window.__bgmUnlock();}catch(e){}
     try{window.scrollTo(0,0);}catch(e){}
     g.classList.add('torn');root.classList.remove('gate-on');
-    setTimeout(function(){root.classList.remove('curtain-wait');},360);
-    setTimeout(function(){if(g.parentNode)g.parentNode.removeChild(g);},1200);
+    setTimeout(function(){root.classList.remove('curtain-wait');},380);
+    setTimeout(function(){if(g.parentNode)g.parentNode.removeChild(g);},1300);
   }
   var tk=g.querySelector('.tk');
   g.addEventListener('pointermove',function(e){var r=tk.getBoundingClientRect();tk.style.setProperty('--x',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');tk.style.setProperty('--y',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');});
@@ -1140,7 +1145,6 @@ html.lite .intro .title.fire.burn .ch{animation-name:clEmberL!important}
     Object.keys(links).forEach(function(k){if(k===id)links[k].setAttribute('aria-current','true');else links[k].removeAttribute('aria-current');});
     var a=links[id];if(a&&nav){nav.scrollTo({left:a.offsetLeft-(nav.clientWidth-a.offsetWidth)/2,behavior:'smooth'});}
   }
-  /* 렉 줄이기: 위치를 먼저 한꺼번에 읽고, 그다음에 한꺼번에 바꿈(읽기·쓰기를 섞으면 매번 화면 계산을 다시 함). 바뀐 값만 적용 */
   var tvh=window.innerHeight;window.addEventListener('resize',function(){tvh=window.innerHeight;});
   function setS(el,k,v){var c=el.__st||(el.__st={});if(c[k]!==v){c[k]=v;el.style[k]=v;}}
   function tick(){
@@ -1586,9 +1590,8 @@ html.cl-seq.cl-txt .intro .occasion,html.cl-seq.cl-txt .intro .genre,html.cl-seq
   var cv=document.createElement('canvas');cv.className='crowd';cv.setAttribute('aria-hidden','true');intro.insertBefore(cv,intro.firstChild);
   var cx=cv.getContext('2d'),W=0,H=0,L=[],mode=1,t0=null;
   function off(el){var x=0,y=0;while(el&&el!==intro){x+=el.offsetLeft;y+=el.offsetTop;el=el.offsetParent;}return {x:x,y:y};}
-  var LITE=document.documentElement.classList.contains('lite');
   var glowS=(function(){var c=document.createElement('canvas');c.width=c.height=96;var g=c.getContext('2d'),gr=g.createRadialGradient(48,48,0,48,48,48);gr.addColorStop(0,'rgba(255,214,150,.48)');gr.addColorStop(.35,'rgba(255,160,70,.15)');gr.addColorStop(1,'rgba(255,140,60,0)');g.fillStyle=gr;g.fillRect(0,0,96,96);return c;})();
-  function build(){var dpr=Math.min(LITE?1.25:2,window.devicePixelRatio||1);W=intro.offsetWidth;H=intro.offsetHeight;cv.style.width=W+'px';cv.style.height=H+'px';cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
+  function build(){var dpr=Math.min(2,window.devicePixelRatio||1);W=intro.offsetWidth;H=intro.offsetHeight;cv.style.width=W+'px';cv.style.height=H+'px';cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0);
     var o=off(wrap),fx0=o.x-10,fy0=o.y-10,fx1=o.x+wrap.offsetWidth+10,fy1=o.y+wrap.offsetHeight+10;L=[];
     var cue=intro.querySelector('.cue'),cy=cue?off(cue).y:H,ch=cue?cue.offsetHeight:0;
     function ok(x,y){if(x>fx0&&x<fx1&&y>fy0&&y<fy1)return false;if(cue&&y>cy-14&&y<cy+ch+10&&Math.abs(x-W/2)<90)return false;return true;}
@@ -1602,16 +1605,16 @@ html.cl-seq.cl-txt .intro .occasion,html.cl-seq.cl-txt .intro .genre,html.cl-seq
     if(mode&&t0!==null){var lit=reduce?1:Math.min(1,(t-t0)/3400);
       for(var i=0;i<L.length;i++){var p=L[i];if(p.o>lit)break;var a=Math.min(1,(lit-p.o)*7),fl=.86+Math.sin(t/260+p.ph)*.09+Math.sin(t/97+p.ph*2)*.05,r=8*p.s*fl;
         var R2=r*3.2;cx.globalAlpha=a;cx.drawImage(glowS,p.x-R2,p.y-R2,R2*2,R2*2);cx.globalAlpha=1;cx.fillStyle='rgba(255,248,230,'+(.9*a)+')';cx.beginPath();cx.ellipse(p.x,p.y,1.4*p.s,3*p.s*fl,0,0,6.283);cx.fill();}}
-    cvOn=window.__sy<cVH*1.1;if(cvOn)requestAnimationFrame(draw);else cvRun=false;}
+    cvOn=window.__sy<cVH*1.1&&t0!==null;if(cvOn)requestAnimationFrame(draw);else cvRun=false;}
   /* 렉 줄이기: 첫 화면이 안 보이면 객석 촛불 그리기를 쉼 */
   var cvOn=true,cvRun=true,cVH=innerHeight;addEventListener('resize',function(){cVH=innerHeight;});
-  function cvChk(){cvOn=window.__sy<cVH*1.1;if(cvOn&&!cvRun){cvRun=true;requestAnimationFrame(draw);}}
+  function cvChk(){cvOn=window.__sy<cVH*1.1&&t0!==null;if(cvOn&&!cvRun){cvRun=true;requestAnimationFrame(draw);}}
   addEventListener('scroll',cvChk,{passive:true});
   build();requestAnimationFrame(draw);
   var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build,150);});
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){setTimeout(build,300);});
   /* 간판·무대 빛이 차오를 때(cl-warm) 함께 켜지기 시작, 연출을 다시 보면 꺼졌다가 다시 */
-  new MutationObserver(function(){var w=root.classList.contains('cl-warm');if(w&&t0===null){build();t0=performance.now()+400;}if(!w)t0=null;}).observe(root,{attributes:true,attributeFilter:['class']});
+  new MutationObserver(function(){var w=root.classList.contains('cl-warm');if(w&&t0===null){build();t0=performance.now()+400;if(!cvRun){cvRun=true;requestAnimationFrame(draw);}}if(!w)t0=null;}).observe(root,{attributes:true,attributeFilter:['class']});
 })();
 </script>
 
@@ -2043,12 +2046,9 @@ html[data-rv="popflick"].g2.o1 .intro .title.fire.lplay.fl1 .c,html[data-rv="pop
     function mk(){if(ctx)return;try{ctx=new AC();gain=ctx.createGain();gain.gain.value=0;gain.connect(ctx.destination);}catch(e){ctx=null;}}
     mk();
     if(ctx){
-      /* 렉 줄이기: 음악 데이터를 첫 화면이 그려진 뒤, 가능하면 다른 일꾼(브라우저)에게 맡겨 풂 */
+      var raw=bytes().buffer;
       var ok=function(b){buf=b;if(pendingStart)begin();},bad=function(){};
-      var dec=function(raw){try{var pr=ctx.decodeAudioData(raw,ok,bad);if(pr&&pr.catch)pr.catch(bad);}catch(e){}};
-      var prep=function(){var mime=(d.getAttribute('data-type')||'audio/mpeg');
-        try{fetch('data:'+mime+';base64,'+b64).then(function(r){return r.arrayBuffer();}).then(dec,function(){dec(bytes().buffer);});}catch(e){dec(bytes().buffer);}};
-      setTimeout(prep,250);
+      try{var pr=ctx.decodeAudioData(raw,ok,bad);if(pr&&pr.catch)pr.catch(bad);}catch(e){}
     }
     /* 티켓 터치 순간: 소리 장치만 깨움(1샘플짜리 무음) */
     window.__bgmUnlock=function(){
@@ -2130,9 +2130,9 @@ html[data-rv="popflick"].g2.o1 .intro .title.fire.lplay.fl1 .c,html[data-rv="pop
 /* 1) 입장 티켓 화면: 무대 사진·커튼 주름·빛줄기를 뒤쪽 깊이에, 티켓은 앞에 띄움
    (가볍게: 움직임은 transform만 바꿈 → 폰이 그림을 다시 그리지 않고 옮기기만 함) */
 html.d3 .gate{perspective:700px;perspective-origin:50% 40%}
-html.d3 .gate-photo,html.d3 .gate-photo2{transform:translate3d(var(--bx,0px),var(--by,0px),-380px) scale(1.543);transform-origin:50% 40%;transition:transform 1.15s cubic-bezier(.55,0,.25,1)}
-html.d3 .gate-beam{transform:translate3d(calc(-50% + var(--mx,0px)),var(--my,0px),-260px) scale(1.371);transform-origin:50% 40%}
-html.d3 .gate-folds{transform:translate3d(var(--fx,0px),var(--fy,0px),-160px) scale(1.229);transform-origin:50% 40%;transition:transform 1.15s cubic-bezier(.55,0,.25,1)}
+html.d3 .gate-photo,html.d3 .gate-photo2{transform:translate(calc(var(--bx,0px) * .648),calc(var(--by,0px) * .648));transform-origin:50% 40%;transition:transform 1.15s cubic-bezier(.7,0,.3,1);will-change:transform}
+html.d3 .gate-beam{transform:translate(calc(-50% + var(--mx,0px) * .729),calc(var(--my,0px) * .729));transform-origin:50% 40%;will-change:transform}
+html.d3 .gate-folds{transform:translate(calc(var(--fx,0px) * .814),calc(var(--fy,0px) * .814));transform-origin:50% 40%;transition:transform 1.15s cubic-bezier(.7,0,.3,1);will-change:transform}
 html.d3 .tk3d{position:relative;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(40px);will-change:transform}
 /* 그림자: 흐림 필터 대신 그라데이션(훨씬 가벼움) */
 html.d3 .tk3d::before{content:"";position:absolute;left:-6%;right:-6%;top:-2%;bottom:-10%;background:radial-gradient(closest-side,rgba(0,0,0,.6),rgba(0,0,0,.25) 60%,transparent);transform:translateZ(-80px);pointer-events:none}
@@ -2147,29 +2147,23 @@ html.d3 .tkslab{display:block;position:absolute;left:0;right:0;top:0;bottom:0;bo
   -webkit-mask:radial-gradient(circle 13px at 0 var(--ny,60%),transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 13px at 100% var(--ny,60%),transparent 98%,#000) right/51% 100% no-repeat;
   mask:radial-gradient(circle 13px at 0 var(--ny,60%),transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 13px at 100% var(--ny,60%),transparent 98%,#000) right/51% 100% no-repeat}
 /* 찢으면: 무대 사진 속으로 들어가듯 앞으로 다가오고, 티켓 조각은 종이처럼 휘며 들려 올라갔다가 화면 쪽으로 날아감 */
-html.d3 .gate.torn .gate-photo,html.d3 .gate.torn .gate-photo2{transform:translate3d(0,0,-60px) scale(1.543)}
-html.d3 .gate.torn .gate-folds{transform:translate3d(0,0,120px) scale(1.229)}
+html.d3 .gate.torn .gate-photo,html.d3 .gate.torn .gate-photo2{transform:translate3d(0,0,330px) scale(1.543)}
+html.d3 .gate.torn .gate-folds{transform:translate3d(0,0,520px) scale(1.229)}
 html.d3 .gate.torn .tk3d::before,html.d3 .gate.torn .tkslab{opacity:0;transition:opacity .25s}
 html.d3 .gate.torn .tk-top{animation-name:tearTop3}
 html.d3 .gate.torn .tk-bot{animation-name:tearBot3}
 @keyframes tearTop3{
   0%{transform:none}
-  20%{transform:translate3d(-1px,-3px,6px) rotateX(-12deg) rotate(-1.5deg)}
+  16%{transform:translate3d(-2px,-5px,12px) rotateX(-24deg) skewX(-2deg) rotate(-3deg)}
+  38%{transform:translate3d(-5%,-28%,90px) rotateX(-44deg) rotateY(-12deg) skewX(-4deg) rotate(-7deg)}
   75%{opacity:1}
-  100%{transform:translate3d(-8%,-70%,120px) rotateX(-36deg) rotateY(-12deg) rotate(-7deg);opacity:0}}
+  100%{transform:translate3d(-18%,-115%,260px) rotateX(-70deg) rotateY(-30deg) rotate(-16deg);opacity:0}}
 @keyframes tearBot3{
   0%{transform:none}
-  20%{transform:translate3d(1px,3px,6px) rotateX(12deg) rotate(1deg)}
+  16%{transform:translate3d(2px,6px,12px) rotateX(24deg) skewX(2deg) rotate(2deg)}
+  38%{transform:translate3d(4%,30%,90px) rotateX(44deg) rotateY(12deg) skewX(4deg) rotate(5deg)}
   75%{opacity:1}
-  100%{transform:translate3d(6%,80%,120px) rotateX(36deg) rotateY(12deg) rotate(5deg);opacity:0}}
-/* 1-A: 덜 화려하게 — 시간·거리·사진 확대를 줄임 */
-html.d3 .gate.torn .tk-top{animation-duration:.95s;animation-delay:.08s;animation-timing-function:cubic-bezier(.5,0,.3,1)}
-html.d3 .gate.torn .tk-bot{animation-duration:.95s;animation-delay:.12s;animation-timing-function:cubic-bezier(.5,0,.3,1)}
-html.d3 .gate.torn{transition:opacity .45s ease .6s}
-/* 렉 줄이기: 찢기는 동안 티켓 전체 그림자(필터)를 끄고, 두 조각은 미리 따로 준비 */
-html.d3 .tk-top,html.d3 .tk-bot{will-change:transform,opacity}
-html.d3 .gate.torn .tk{filter:none;animation:none}
-html.d3 .gate{will-change:opacity}
+  100%{transform:translate3d(14%,135%,260px) rotateX(70deg) rotateY(30deg) rotate(12deg);opacity:0}}
 
 /* 2) 첫 화면(간판): 테두리가 뒤로 이어진 빛 상자처럼 두께가 생기고, 제목은 그 앞에 떠 있음 */
 html.d3 .intro{perspective:800px;perspective-origin:50% 45%}
@@ -2222,7 +2216,7 @@ html.d3 .dust{display:block}
     intro.insertBefore(refl,intro.firstChild);
     new MutationObserver(function(rs){rs.forEach(function(r){if(r.target===wrap)return;var c=map.get(r.target);if(!c)return;var v=r.target.getAttribute(r.attributeName);if(v===null)c.removeAttribute(r.attributeName);else c.setAttribute(r.attributeName,v);});})
       .observe(wrap,{subtree:true,attributes:true,attributeFilter:['class','style']});
-    var sg=wrap.querySelector(':scope>.sign');if(sg){var EXT=root.classList.contains('lite')?3:6,sp=6/EXT;for(var i=1;i<=EXT;i++){var c=sg.cloneNode(true);c.classList.add('ext');c.style.setProperty('--ez',(-i*9*sp)+'px');c.style.setProperty('--eo',(.42-i*.055*sp).toFixed(3));wrap.insertBefore(c,sg.nextSibling);}}
+    var sg=wrap.querySelector(':scope>.sign');if(sg){for(var i=1;i<=6;i++){var c=sg.cloneNode(true);c.classList.add('ext');c.style.setProperty('--ez',(-i*9)+'px');c.style.setProperty('--eo',(.42-i*.055).toFixed(3));wrap.insertBefore(c,sg.nextSibling);}}
   }
   var RG=10,rbox={l:0,t:0,w:0,h:0};
   function placeRefl(){if(!refl)return;rbox={l:wrap.offsetLeft,t:wrap.offsetTop,w:wrap.offsetWidth,h:wrap.offsetHeight};
@@ -2252,9 +2246,8 @@ html.d3 .dust{display:block}
   }
   function backCanvas(parent,before){var c=document.createElement('canvas');c.className='dust';c.setAttribute('aria-hidden','true');c.style.zIndex=parent===gate?'-1':'0';parent.insertBefore(c,before||null);return c;}
   var dGate=null,dIntro=null,dFront=front?Dust(front,14,.62,1):null;
-  var DN=root.classList.contains('lite')?22:40;
-  if(gate){var gs=gate.querySelector('.gate-shade');dGate=Dust(backCanvas(gate,gs),DN,0,.55);}
-  if(intro&&wrap){dIntro=Dust(backCanvas(intro,wrap),DN,0,.55);}
+  if(gate){var gs=gate.querySelector('.gate-shade');dGate=Dust(backCanvas(gate,gs),40,0,.55);}
+  if(intro&&wrap){dIntro=Dust(backCanvas(intro,wrap),40,0,.55);}
   addEventListener('resize',function(){[dGate,dIntro,dFront].forEach(function(d){if(d)d.size();});});
 
   var ptr={x:0,y:0,tx:0,ty:0,active:0},t0=performance.now();
@@ -2287,6 +2280,7 @@ html.d3 .dust{display:block}
     if(intro&&wrap){
       p=Math.min(1,Math.max(0,y/(vh*.85)));
       var away=p>.03;if(away!==loop.away){loop.away=away;root.classList.toggle('intro-away',away);}
+      var flat=p>.06;if(flat!==loop.flat){loop.flat=flat;root.classList.toggle('intro-flat',flat);}
       if(p<1){
         var dz=1-sm(0,.06,p),sc=1-p*.22,ty=-p*40,rx=-ptr.y*7*dz,ry=ptr.x*11*dz;
         setv(wrap,'--dz',dz.toFixed(2));
