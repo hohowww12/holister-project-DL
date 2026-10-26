@@ -813,7 +813,7 @@ html.intro-away .intro .title .ch,html.intro-away .intro .title .tcandle .flame,
 .gate.torn .tk::after{opacity:0}
 
 /* 간판이 작아지며 사라지기 시작하면 이미 납작해진 두께용 복사본·바닥 반사는 숨김 (눈에 안 보이는 차이) */
-html.intro-flat .intro .wrap>.sign.ext,html.intro-flat .intro .refl{visibility:hidden}
+.intro.flat .wrap>.sign.ext,.intro.flat .refl{visibility:hidden}
 /* 뒤를 흐리게 비추는 효과(배경 블러)는 화면이 움직일 때마다 다시 계산됨 → 거의 같은 색의 배경으로 */
 .bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(9,7,11,.94)!important}
 #bgmBtn{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background:rgba(20,14,10,.9)!important}
@@ -2260,7 +2260,7 @@ html.d3 .dust{display:block}
   var lVH=innerHeight;addEventListener('resize',function(){lVH=innerHeight;});
   function loop(now){
     requestAnimationFrame(loop);
-    var t=(now-t0)/1000,vh=lVH,y=window.__sy;
+    var t=(now-t0)/1000,vh=lVH,y=window.scrollY||pageYOffset||0;
     /* 손가락·마우스를 따라 기울고, 가만히 있으면 저절로 아주 천천히 흔들림 */
     var idle=now-ptr.active>2500,dx,dy;
     if(idle){dx=Math.sin(t*.35)*.5;dy=Math.sin(t*.27+1.2)*.4;}else{dx=ptr.tx;dy=ptr.ty;}
@@ -2280,7 +2280,7 @@ html.d3 .dust{display:block}
     if(intro&&wrap){
       p=Math.min(1,Math.max(0,y/(vh*.85)));
       var away=p>.03;if(away!==loop.away){loop.away=away;root.classList.toggle('intro-away',away);}
-      var flat=p>.06;if(flat!==loop.flat){loop.flat=flat;root.classList.toggle('intro-flat',flat);}
+      var flat=p>.06;if(flat!==loop.flat){loop.flat=flat;intro.classList.toggle('flat',flat);}
       if(p<1){
         var dz=1-sm(0,.06,p),sc=1-p*.22,ty=-p*40,rx=-ptr.y*7*dz,ry=ptr.x*11*dz;
         setv(wrap,'--dz',dz.toFixed(2));
